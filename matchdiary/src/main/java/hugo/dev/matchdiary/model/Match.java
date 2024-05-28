@@ -22,12 +22,13 @@ public class Match {
     @NotEmpty
     private Date date;
 
+    @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "team_one_id")
     @NotEmpty
     private Team teamOne;
 
-    @ManyToOne
-    @JsonManagedReference
+
     @Column(name = "score_team_one")
     @NotEmpty
     private Integer scoreTeamOne;
