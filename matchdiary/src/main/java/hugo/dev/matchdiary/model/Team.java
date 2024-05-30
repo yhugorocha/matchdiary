@@ -1,5 +1,6 @@
 package hugo.dev.matchdiary.model;
 
+import hugo.dev.matchdiary.dto.team.TeamDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,13 @@ public class Team {
     private String state;
 
     @NotEmpty
-    @Column(name = "photo_url")
+    @Column(name = "photo_url", nullable = false)
     private String photo_url;
+
+    public Team(TeamDTO teamDTO){
+        this.id = teamDTO.getId();
+        this.name = teamDTO.getName();
+        this.state = teamDTO.getState();
+        this.photo_url = teamDTO.getPhoto_url();
+    }
 }

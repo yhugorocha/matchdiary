@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,5 +39,30 @@ public class TeamService {
     public Page<TeamDTO> convertToDtoPage(Page<Team> pageTeam){
         List<TeamDTO> listTeam = pageTeam.stream().map(team -> new TeamDTO(team)).collect(Collectors.toList());
         return new PageImpl<>(listTeam, PageRequest.of(pageTeam.getNumber(), pageTeam.getSize()), pageTeam.getTotalElements());
+    }
+
+    public TeamDTO save(TeamDTO teamDTO) {
+         Team team = teamRepository.save(new Team(teamDTO));
+         return new TeamDTO(team);
+    }
+
+    public TeamDTO update(TeamDTO teamDTO) {
+        Team team = teamRepository.findById(teamDTO.getId()).map(teamExisting -> {
+            teamExisting.setName(teamDTO.getName());
+            teamExisting.setState(teamDTO.getState());
+            teamExisting.setPhoto_url(teamDTO.getPhoto_url());
+            return teamExisting;
+        }).orElseThrow(() -> new NotFoundException("Team not found"));
+
+        teamRepository.save(team);
+
+        return new TeamDTO(team);
+    }
+
+    public void delete(Long id) {
+        teamRepository.findById(id).map(teamExisting -> {
+            teamRepository.deleteById(teamExisting.getId());
+            return teamExisting;
+        }).orElseThrow(() -> new NotFoundException("Team not found"));
     }
 }
