@@ -2,7 +2,6 @@ package hugo.dev.matchdiary.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,34 +18,28 @@ public class Match {
     private Long id;
 
     @Column(name = "date")
-    @NotEmpty
     private Date date;
 
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "team_one_id")
-    @NotEmpty
     private Team teamOne;
 
 
     @Column(name = "score_team_one")
-    @NotEmpty
     private Integer scoreTeamOne;
 
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "team_two_id")
-    @NotEmpty
     private Team teamTwo;
 
     @Column(name = "score_team_two")
-    @NotEmpty
     private Integer scoreTeamTwo;
 
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "team_supported_id")
-    @NotEmpty
     private Team team_supported;
 
 
